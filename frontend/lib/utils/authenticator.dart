@@ -9,9 +9,6 @@ class AuthService {
       final prefs = await SharedPreferences.getInstance();
       String tokenString = jsonEncode(token); // Convert Map to String
       await prefs.setString(_tokenKey, tokenString);
-      print("Token saved: $tokenString");
-    } else {
-      print("Token is null, cannot save");
     }
   }
 

@@ -16,6 +16,8 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController rollController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool isChecked = false;
+
   // dispose method to avoid memory leaks
   @override
   void dispose() {
@@ -26,11 +28,12 @@ class _LoginFormState extends State<LoginForm> {
 
   void loginUser() async {
     var reqBody = {
-      "rollNo": rollController.text,
-      "password": passwordController.text
+      "roll": rollController.text,
+      "password": passwordController.text,
+      "isaa": isChecked,
     };
 
-    var response = await http.post(Uri.parse("http://10.51.26.80:3000/login"),
+    var response = await http.post(Uri.parse("http://172.17.0.1:3000/login"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(reqBody));
 
@@ -38,7 +41,6 @@ class _LoginFormState extends State<LoginForm> {
 
     if (jsonResponse['status']) {
       await _authService.saveToken(jsonResponse['userData']);
-      // make both the fields empty
       rollController.text = "";
       passwordController.text = "";
       Navigator.pushNamed(context, Routes.homeRoute);
@@ -92,19 +94,24 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: 5),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                "Forgot Password?",
-                style: TextStyle(
-                  color: Colors.blueGrey,
-                ),
+              Checkbox(
+                value: isChecked,
+                onChanged: (bool? value) {
+                  setState(() {
+                    isChecked = value!;
+                  });
+                },
               ),
+              const Text(
+                "Activity Associate",
+                style: TextStyle(color: Colors.black87),
+              )
             ],
           ),
           const SizedBox(height: 10),
-
           const SizedBox(height: 25),
           ElevatedButton(
             style: ElevatedButton.styleFrom(

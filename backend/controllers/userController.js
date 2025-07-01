@@ -2,9 +2,63 @@ const db = require("../config/db")
 
 const loginUser = async (req, res) => {
 
+    // try {
+
+    //     const data = req.body;
+    //     const [rows] = await db.execute(`SELECT * FROM users WHERE roll = ?`, [data.roll]);
+
+    //     // no user exists
+    //     if (rows.length == 0) {
+    //         return res.status(400).json({
+    //             userData: null,
+    //             message: "No user exists",
+    //             status: false
+    //         });
+    //     }
+    //     // user exists
+    //     else if (rows.length == 1) {
+    //         const userPassword = rows[0].password;
+    //         // correct password
+    //         if (data.password == userPassword) {
+    //             const userData = {
+    //                 roll: rows[0].roll,
+    //                 name: rows[0].name,
+    //                 mobile: rows[0].mobile,
+    //                 dept: rows[0].dept,
+    //                 email: rows[0].email,
+    //             };
+    //             return res.status(201).json({
+    //                 userData: userData,
+    //                 message: "Login successful",
+    //                 status: true
+    //             });
+    //         }
+    //         // wrong password 
+    //         else {
+    //             return res.status(201).json({
+    //                 userData: null,
+    //                 message: "Wrong password",
+    //                 status: false
+    //             });
+    //         }
+    //     }
+
+    // } 
     try {
+
         const data = req.body;
-        const [rows] = await db.execute(`SELECT * FROM users WHERE roll = ?`, [data.rollNo]);
+        const isaa = data.isaa;
+
+        console.log(isaa);
+
+        if (!isaa) {
+            table = "users";
+        }
+        else {
+            table = "admins"
+        }
+
+        const [rows] = await db.execute(`SELECT * FROM ${table} WHERE roll = ?`, [data.roll]);
 
         // no user exists
         if (rows.length == 0) {
@@ -25,6 +79,7 @@ const loginUser = async (req, res) => {
                     mobile: rows[0].mobile,
                     dept: rows[0].dept,
                     email: rows[0].email,
+                    isaa: isaa,
                 };
                 return res.status(201).json({
                     userData: userData,
@@ -41,11 +96,11 @@ const loginUser = async (req, res) => {
                 });
             }
         }
-
-    } catch {
+    }
+    catch {
         return res.status(500).json({
             userData: null,
-            message: "Some error occurred",
+            message: "Internal Server Error",
             status: false
         })
     }
@@ -54,9 +109,8 @@ const loginUser = async (req, res) => {
 const registerUser = async (req, res) => {
 
     try {
-
         const data = req.body;
-        const [rows] = await db.execute(`SELECT * FROM users WHERE roll = ?`, [data.rollNo]);
+        const [rows] = await db.execute(`SELECT * FROM users WHERE roll = ?`, [data.roll]);
 
         // check if user exists
         if (rows.length > 0) {
@@ -68,8 +122,8 @@ const registerUser = async (req, res) => {
         // if it doesn't, register it
         else {
             await db.execute(
-                `INSERT INTO users (name, roll, mobile, dept, email, password) VALUES (?, ?, ?, ?, ?, ?)`,
-                [data.name, data.rollNo, data.phone, data.department, data.email, data.password]
+                `INSERT INTO users (roll, name, mobile, dept, email, password) VALUES (?, ?, ?, ?, ?, ?)`,
+                [data.roll, data.name, data.mobile, data.dept, data.email, data.password]
             );
 
             res.status(201).json({
@@ -90,9 +144,7 @@ const registerUser = async (req, res) => {
 };
 
 const modifyUser = async (req, res) => {
-
     const data = req.body;
-
     try {
 
         await db.execute(`UPDATE users 

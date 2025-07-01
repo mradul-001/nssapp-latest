@@ -42,15 +42,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
   void registerUser() async {
     var regBody = {
+      "roll": rollController.text,
       "name": nameController.text,
-      "rollNo": rollController.text,
-      "phone": phoneController.text,
-      "department": deptController.text,
+      "mobile": phoneController.text,
+      "dept": deptController.text,
       "email": emailController.text,
       "password": passwordController.text
     };
     var response = await http.post(
-        Uri.parse("http://10.51.26.80:3000/register"),
+        Uri.parse("http://172.17.0.1:3000/register"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(regBody));
 
