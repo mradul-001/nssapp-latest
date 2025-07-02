@@ -22,16 +22,10 @@ class Homevolunteer extends StatelessWidget {
           children: [
             // First three
             TitleWithBox(
-              title: "Mark your attendance",
-              imagePath: "./assets/images/attendance_.png",
-              onImageOrArrowPressed: () async {
-                final url = Uri.parse(
-                    "https://nss.gymkhana.iitb.ac.in/attendance-24//");
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  print("Could not launch $url");
-                }
+              title: "Attendace",
+              imagePath: "./assets/images/feedback.png",
+              onImageOrArrowPressed: () {
+                Navigator.pushNamed(context, Routes.attRoute);
               },
             ),
             const SizedBox(height: 24),
