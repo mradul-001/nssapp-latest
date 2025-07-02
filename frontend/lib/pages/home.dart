@@ -18,7 +18,6 @@ class Home extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         final data = snapshot.data!;
-        print(data);
         final isaa = data["isaa"] == true;
         return isaa ? const Homeaa() : const Homevolunteer();
       },

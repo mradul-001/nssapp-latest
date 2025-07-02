@@ -9,4 +9,5 @@ class Routes {
   static String feedbackRoute = "/feedback";
   static String eventRoute = "/event";
   static String calendarRoute = "/calendar";
+  static String attRoute = "/attendance";
 }

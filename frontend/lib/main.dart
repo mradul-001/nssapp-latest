@@ -9,6 +9,7 @@ import 'package:nssapp/pages/sign_up.dart';
 import 'package:nssapp/pages/home.dart';
 import 'package:nssapp/pages/splash.dart';
 import 'package:nssapp/pages/calendar.dart';
+import 'package:nssapp/pages/attendance.dart';
 import 'utils/routes.dart';
 
 void main() {
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         Routes.feedbackRoute: (context) => const FeedbackPage(),
         Routes.eventRoute: (context) => const EventPage(),
         Routes.calendarRoute: (context) => const EventCalendarScreen(),
+        Routes.attRoute: (context) => const Attendance(),
       },
     );
   }
