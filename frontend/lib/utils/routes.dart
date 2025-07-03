@@ -10,4 +10,6 @@ class Routes {
   static String eventRoute = "/event";
   static String calendarRoute = "/calendar";
   static String attRoute = "/attendance";
+  static String addEvent = "/addEvent";
+  static String allEvents = "/allEvents";
 }
