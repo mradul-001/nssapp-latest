@@ -1,12 +1,10 @@
 const db = require("../config/db");
 
-const getEventData = async (req, res) => {
+const allEvents = async (req, res) => {
     try {
         const today = new Date();
         const todayString = today.toISOString().split('T')[0];
-
-        const [rows] = await db.execute(`SELECT * FROM events WHERE date = ?`, [todayString]);
-
+        const [rows] = await db.execute(`SELECT * FROM events WHERE date >= ?`, [todayString]);
         res.json({
             events: rows,
             status: 200,
@@ -16,4 +14,4 @@ const getEventData = async (req, res) => {
     }
 };
 
-module.exports = getEventData;
+module.exports = allEvents;

@@ -12,10 +12,7 @@ class Attendance extends StatefulWidget {
 class _AttendanceState extends State<Attendance> {
   
   List<String> activities = [];
-  final List<String> aas = ['AA1', 'AA2', 'AA3'];
-
   String? selectedActivity;
-  String? selectedAA;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -28,7 +25,7 @@ class _AttendanceState extends State<Attendance> {
   Future<void> fetchActivities() async {
     try {
       final res =
-          await http.get(Uri.parse('http://localhost:3000/getEventData'));
+          await http.get(Uri.parse('http://localhost:3000/eventsToday'));
       if (res.statusCode == 200) {
         final data = json.decode(res.body);
         final events = data['events'] as List;
@@ -75,7 +72,7 @@ class _AttendanceState extends State<Attendance> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      print("Activity: $selectedActivity, AA: $selectedAA");
+                      print("Activity: $selectedActivity");
                     }
                   },
                   child: const Text('Mark Attendance'),
