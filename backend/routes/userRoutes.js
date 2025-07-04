@@ -8,8 +8,8 @@ const allEvents = require("../controllers/allEvents");
 const router = express.Router();
 router.post('/login', loginUser);
 router.post('/register', registerUser);
-router.get('/eventsToday', eventsToday);
+router.post('/eventsToday', eventsToday);
 router.post('/addEvent', addEvent);
-router.get('/allEvents', allEvents);
+router.post('/allEvents', allEvents);
 
 module.exports = router;
